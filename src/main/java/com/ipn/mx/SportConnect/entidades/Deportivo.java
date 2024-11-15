@@ -40,10 +40,7 @@ public class Deportivo implements Serializable {
     @Column(name = "tiene_medico", nullable = false)
     private boolean tiene_medico;
 
-    /*@OneToOne
-    @JoinColumn(name = "direccion_id", referencedColumnName = "id")
-    private Direccion direccion;
-
+    /*
     @OneToMany(mappedBy = "deportivo", cascade = CascadeType.ALL)
     private List<Cancha> canchas;
 

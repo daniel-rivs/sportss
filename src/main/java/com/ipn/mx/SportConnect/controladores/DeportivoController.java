@@ -20,7 +20,7 @@ public class DeportivoController {
             deportivoService.crearDeportivo(deportivo);
             return "Deportivo creado con éxito!";
         }catch(Exception e){
-            return "Error al crear evento: "+e.getMessage();
+            return "Error al crear evento: " + e.getMessage();
         }
     }
 
@@ -61,9 +61,8 @@ public class DeportivoController {
         try{
             deportivoService.eliminarDeportivo(idDeportivo);
         } catch(Exception e){
-            System.out.println("Error al eliminar un deportivo: " + e.getMessage());
+            return "Error al eliminar un deportivo: " + e.getMessage();
         }
         return null;
     }
-
 }
