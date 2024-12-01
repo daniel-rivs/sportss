@@ -50,19 +50,19 @@ public class DeportivoController {
     public String updateDeportivo(@RequestBody Deportivo deportivo){
         try{
             deportivoService.updateDeportivo(deportivo);
+            return "Deportivo actualizado con éxito!";
         } catch(Exception e){
-            System.out.println("Error al actualizar un deportivo: " + e.getMessage());
+            return("Error al actualizar un deportivo: " + e.getMessage());
         }
-        return null;
     }
 
     @DeleteMapping("/deleteDeportivo")
     public String deleteDeportivo(@RequestParam int idDeportivo){
         try{
             deportivoService.eliminarDeportivo(idDeportivo);
+            return "Deportivo eliminado con éxito!";
         } catch(Exception e){
             return "Error al eliminar un deportivo: " + e.getMessage();
         }
-        return null;
     }
 }

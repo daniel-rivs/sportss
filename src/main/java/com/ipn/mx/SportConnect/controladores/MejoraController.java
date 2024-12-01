@@ -20,10 +20,8 @@ public class MejoraController {
             mejoraService.crearMejora(mejora);
             return "Mejora creada con éxito.";
         }catch(Exception e){
-            System.out.println("Error al crear la mejora: " + e.getMessage());
-        }
-        return null;
-    }
+            return("Error al crear la mejora: " + e.getMessage());
+        }}
 
     @GetMapping("/obtenerMejoras")
     public List<Mejora> obtenerMejoras(){
