@@ -1,7 +1,7 @@
-package com.miempresa.proyectospring.controller;
+package com.ipn.mx.SportConnect.controladores;
 
-import com.miempresa.proyectospring.model.Encargado;
-import com.miempresa.proyectospring.service.EncargadoService;
+import com.ipn.mx.SportConnect.entidades.Encargado;
+import com.ipn.mx.SportConnect.servicios.impl.EncargadoServiceImpl;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,26 +15,26 @@ import java.util.Optional;
 public class EncargadoController {
 
     @Autowired
-    private EncargadoService encargadoService;
+    private EncargadoServiceImpl encargadoServiceImpl;
 
     @Operation(summary = "Obtener un encargado por ID",
             description = "Devuelve los detalles de un encargado según su ID")
-    @GetMapping("/{id}")
+    @GetMapping("/obtenerEncargado/{id}")
     public Optional<Encargado> obtenerEncargado(@PathVariable Long id) {
-        return encargadoService.obtenerEncargadoPorId(id);
+        return encargadoServiceImpl.obtenerEncargadoPorId(id);
     }
 
     @Operation(summary = "Crear o actualizar un encargado",
             description = "Guarda un nuevo encargado o actualiza uno existente")
-    @PostMapping
+    @PostMapping("/guardarEncargado")
     public Encargado guardarEncargado(@RequestBody Encargado encargado) {
-        return encargadoService.guardarEncargado(encargado);
+        return encargadoServiceImpl.guardarEncargado(encargado);
     }
 
     @Operation(summary = "Eliminar un encargado",
             description = "Elimina un encargado existente según su ID")
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/eliminarEncargado/{id}")
     public void eliminarEncargado(@PathVariable Long id) {
-        encargadoService.eliminarEncargado(id);
+        encargadoServiceImpl.eliminarEncargado(id);
     }
 }
