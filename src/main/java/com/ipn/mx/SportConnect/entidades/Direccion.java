@@ -24,7 +24,7 @@ public class Direccion implements Serializable {
     @JoinColumn(name = "deportivo_id", referencedColumnName = "id_deportivo", nullable = false)
     private Deportivo deportivo;
 
-    @Column(name = "calle", length = 255, nullable = false)
+    @Column(name = "calle", /*length = 255, es redundante*/ nullable = false)
     private String calle;
 
     @Column(name = "alcaldia", length = 100, nullable = false)

@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/Direccion")
+@RequestMapping("/api/direcciones")
 public class DireccionController {
 
     @Autowired
@@ -44,7 +44,7 @@ public class DireccionController {
         return null;
     }
     //Obtener una direccion por los datos dados
-    @GetMapping("/obtenerDireccion1")
+    @GetMapping("/checkDireccion")
     public ResponseEntity<Boolean> checkDireccionExistente(@RequestParam String calle,
                                                            @RequestParam String alcaldia,
                                                            @RequestParam String codigo_postal) {
