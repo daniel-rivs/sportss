@@ -11,14 +11,8 @@ public interface EncargadoService {
     public Encargado guardarEncargado(Encargado encargado);
 
     // Método para obtener un encargado por su ID
-    public Optional<Encargado> obtenerEncargadoPorId(Long id);
+    public Encargado obtenerEncargadoPorId(int id);
 
     // Método para buscar un encargado por RFC
     public Optional<Encargado> buscarPorRFC(String RFC_CURP);
-
-    // Método para eliminar un encargado
-    void eliminarEncargado(Long idEncargado);
-
-    //Método para buscar rfc y contraseña de los encargados
-    public Optional<Encargado> findByRfcCurp(String rfcCurp);
 }

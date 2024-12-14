@@ -62,19 +62,4 @@ public class HorarioController {
         }
         return "Horario guardado con éxito";
     }
-
-    @Operation(
-            summary = "Eliminar un horario por ID",
-            description = "Este endpoint elimina un horario específico basado en su ID único."
-    )
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "204", description = "Horario eliminado exitosamente."),
-            @ApiResponse(responseCode = "404", description = "No se encontró un horario con el ID proporcionado.")
-    })
-    @DeleteMapping("/deleteHorario")
-    public void eliminarHorario(@RequestParam Long id) {
-        if (!horarioService.eliminarHorario(id)) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Horario con id " + id + " no encontrado.");
-        }
-    }
 }

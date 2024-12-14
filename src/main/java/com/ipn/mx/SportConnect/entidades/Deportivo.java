@@ -1,5 +1,6 @@
 package com.ipn.mx.SportConnect.entidades;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -10,7 +11,7 @@ import java.io.Serializable;
 import java.util.List;
 
 @Data
-@NoArgsConstructor
+@NoArgsConstructor //se usa un no args para poder deserializar los JSON
 @AllArgsConstructor
 @Builder
 @Entity
@@ -18,7 +19,8 @@ import java.util.List;
 public class Deportivo implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id_deportivo;
+    @Column(name = "id_deportivo")
+    private int idDeportivo; //en vez de usar id_deportivo se usa idDeportivo para poder generar el método de busqueda por rfc en EncargadoRespository
 
     @Column(name = "numero_registro", length = 100, nullable = false)
     private int numero_registro;
@@ -41,21 +43,23 @@ public class Deportivo implements Serializable {
     @Column(name = "tiene_medico", nullable = false)
     private boolean tiene_medico;
 
-    // Ejemplo con EAGER
-    @OneToMany(mappedBy = "deportivo", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "deportivo", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY) //Un deportivo tiene muchas canchas
+    @JsonManagedReference
     private List<Cancha> canchas;
 
-    @OneToMany(mappedBy = "deportivo", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "deportivo", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @JsonManagedReference
     private List<Encargado> encargados;
 
-    @OneToMany(mappedBy = "deportivo", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "deportivo", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @JsonManagedReference
     private List<Horario> horarios;
 
 
     @Override
     public String toString(){
         return "Deportivo{" +
-                "id_deportivo:" + id_deportivo +
+                "id_deportivo:" + idDeportivo +
                 "numero_registro: " + numero_registro +
                 "nombre: " + nombre +
                 "acepta_mascotas: " + acepta_mascotas +

@@ -1,5 +1,6 @@
 package com.ipn.mx.SportConnect.entidades;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -21,6 +22,7 @@ public class Direccion implements Serializable {
     private int idDireccion;
 
     @OneToOne
+    @JsonBackReference // Evita serializar al padre en el JSON
     @JoinColumn(name = "deportivo_id", referencedColumnName = "id_deportivo", nullable = false)
     private Deportivo deportivo;
 

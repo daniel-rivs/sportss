@@ -12,7 +12,4 @@ public interface HorarioService {
 
     // Método para guardar un nuevo horario
     Horario guardarHorario(Horario horario);
-
-    // Método para eliminar un horario por su ID
-    boolean eliminarHorario(Long idHorario);
 }

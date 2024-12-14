@@ -1,5 +1,6 @@
 package com.ipn.mx.SportConnect.entidades;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -21,10 +22,13 @@ public class Encargado implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) // Auto-incremental
     @Column(name = "id_encargado") // Asegúrate de que la columna en la base de datos sea la correcta
-    private Long idEncargado; // Cambié el nombre a camelCase
+    private int idEncargado; // Cambié el nombre a camelCase
 
-    @Column(name = "deportivo_id") // Especificamos explícitamente el nombre de la columna
-    private int idDeportivo;
+    @ManyToOne
+    @JsonBackReference // Evita serializar al padre en el JSON
+    @JoinColumn(name = "deportivo_id", referencedColumnName = "id_Deportivo")
+    private Deportivo deportivo;
+
 
     @Column(name = "nombre_encargado")
     private String nombre;
@@ -54,8 +58,20 @@ public class Encargado implements Serializable {
     @Size(min = 8, message = "La contraseña debe tener al menos 8 caracteres")
     private String contrasena; // Cambié el nombre a "contrasena" por convención
 
-    @ManyToOne
-    @JoinColumn(name = "deportivo_id", nullable = false)
-    private Deportivo deportivo;
+    @Override
+    public String toString() {
+        return "Encargado{" +
+                "id_encargado: " + idEncargado +
+                ", deportivo_id: " + deportivo.getIdDeportivo() +
+                ", nombre_encargado: '" + nombre + '\'' +
+                ", primer_apellido: '" + primerApellido + '\'' +
+                ", segundo_apellido: '" + segundoApellido + '\'' +
+                ", telefono_fijo: '" + telefonoFijo + '\'' +
+                ", telefono_movil: '" + telefonoMovil + '\'' +
+                ", cargo: '" + cargo + '\'' +
+                ", rfc: '" + rfcCurp + '\'' +
+                ", contrasena: '" + contrasena + '\'' +
+                '}';
+    }
 
 }

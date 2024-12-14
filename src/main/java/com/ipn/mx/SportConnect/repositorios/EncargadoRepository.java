@@ -7,6 +7,6 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface EncargadoRepository extends JpaRepository<Encargado, Long> {
-    Optional<Encargado> findByRfcCurp(String rfcCurp); // Asegúrate de usar "rfcCurp" en lugar de "RFC_CURP"
+public interface EncargadoRepository extends JpaRepository<Encargado, Integer> {
+    Optional<Encargado> findByRfcCurp(String rfcCurp); //Debe ser RfcCurp en lugar de rfcCurp
 }

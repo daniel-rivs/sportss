@@ -1,5 +1,6 @@
 package com.ipn.mx.SportConnect.entidades;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -21,9 +22,11 @@ public class Horario implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY) // Indica que el ID es auto-incremental.
     @Column(name = "id_horario") // Especifica el nombre exacto de la columna en la base de datos.
     private Long idHorario;
+    @ManyToOne
+    @JsonBackReference // Evita serializar al padre en el JSON
+    @JoinColumn(name = "deportivo_id", referencedColumnName = "id_deportivo")
+    private Deportivo deportivo;
 
-    @Column(name = "deportivo_id") // Relaciona esta propiedad con la columna "ID_Deportivo".
-    private int idDeportivo;
 
     @Column(name = "dia_semana") // Relaciona esta propiedad con la columna "dia_semana".
     private String diaSemana;
@@ -36,7 +39,4 @@ public class Horario implements Serializable {
 
     private boolean inhabil; // Esta columna se genera automáticamente a partir del nombre del atributo.
 
-    @ManyToOne
-    @JoinColumn(name = "deportivo_id", nullable = false)
-    private Deportivo deportivo;
 }
