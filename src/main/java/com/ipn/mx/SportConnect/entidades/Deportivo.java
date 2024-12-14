@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -40,15 +41,16 @@ public class Deportivo implements Serializable {
     @Column(name = "tiene_medico", nullable = false)
     private boolean tiene_medico;
 
-    /*
-    @OneToMany(mappedBy = "deportivo", cascade = CascadeType.ALL)
+    // Ejemplo con EAGER
+    @OneToMany(mappedBy = "deportivo", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<Cancha> canchas;
 
-    @OneToMany(mappedBy = "deportivo", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "deportivo", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<Encargado> encargados;
 
-    @OneToMany(mappedBy = "deportivo", cascade = CascadeType.ALL)
-    private List<Horario> horarios;*/
+    @OneToMany(mappedBy = "deportivo", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    private List<Horario> horarios;
+
 
     @Override
     public String toString(){

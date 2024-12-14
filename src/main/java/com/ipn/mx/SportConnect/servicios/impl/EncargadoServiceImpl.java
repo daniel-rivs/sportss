@@ -5,6 +5,7 @@ import com.ipn.mx.SportConnect.entidades.Encargado;
 import com.ipn.mx.SportConnect.repositorios.EncargadoRepository;
 import com.ipn.mx.SportConnect.servicios.EncargadoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -16,6 +17,8 @@ public class EncargadoServiceImpl implements EncargadoService {
     private EncargadoRepository encargadoRepository;
 
     public Encargado guardarEncargado(Encargado encargado) {
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        encargado.setContrasena(passwordEncoder.encode(encargado.getContrasena()));
         return encargadoRepository.save(encargado);
     }
 
@@ -29,5 +32,10 @@ public class EncargadoServiceImpl implements EncargadoService {
 
     public void eliminarEncargado(Long id) {
         encargadoRepository.deleteById(id);
+    }
+
+    @Override
+    public Optional<Encargado> findByRfcCurp(String rfcCurp) {
+        return encargadoRepository.findByRfcCurp(rfcCurp);
     }
 }

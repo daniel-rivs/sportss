@@ -18,4 +18,7 @@ public interface EncargadoService {
 
     // Método para eliminar un encargado
     void eliminarEncargado(Long idEncargado);
+
+    //Método para buscar rfc y contraseña de los encargados
+    public Optional<Encargado> findByRfcCurp(String rfcCurp);
 }

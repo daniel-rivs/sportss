@@ -1,6 +1,8 @@
 package com.ipn.mx.SportConnect.entidades;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -43,8 +45,17 @@ public class Encargado implements Serializable {
     private String cargo;
 
     @Column(name = "rfc") // Especificamos explícitamente el nombre de la columna
+    @NotNull(message = "El RFC es obligatorio")
+    @Size(min = 10, max = 13, message = "El RFC debe tener entre 10 y 13 caracteres")
     private String rfcCurp;
 
     @Column(name = "password")
+    @NotNull(message = "La contraseña es obligatoria")
+    @Size(min = 8, message = "La contraseña debe tener al menos 8 caracteres")
     private String contrasena; // Cambié el nombre a "contrasena" por convención
+
+    @ManyToOne
+    @JoinColumn(name = "deportivo_id", nullable = false)
+    private Deportivo deportivo;
+
 }
