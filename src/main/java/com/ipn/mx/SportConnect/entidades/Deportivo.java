@@ -43,18 +43,22 @@ public class Deportivo implements Serializable {
     @Column(name = "tiene_medico", nullable = false)
     private boolean tiene_medico;
 
+    //Relaciones cardinales
     @OneToMany(mappedBy = "deportivo", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY) //Un deportivo tiene muchas canchas
     @JsonManagedReference
     private List<Cancha> canchas;
 
-    @OneToMany(mappedBy = "deportivo", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "deportivo", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY) //Aqui es uno a uno, y debe coincidir en ambas entidades
     @JsonManagedReference
-    private List<Encargado> encargados;
+    private Direccion direccion; //Ya no se hace un contenedor (lista) porque solo es uno a uno, por ende, solo se requiere de una direccion.
+
+    @OneToOne(mappedBy = "deportivo", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @JsonManagedReference
+    private Encargado encargado;
 
     @OneToMany(mappedBy = "deportivo", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     @JsonManagedReference
     private List<Horario> horarios;
-
 
     @Override
     public String toString(){

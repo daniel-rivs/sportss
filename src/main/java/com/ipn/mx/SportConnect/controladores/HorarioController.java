@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -54,12 +55,16 @@ public class HorarioController {
             @ApiResponse(responseCode = "200", description = "Horario creado o actualizado exitosamente.")
     })
     @PostMapping("/guardarHorario")
-    public String guardarHorario(@RequestBody Horario horario) {
+    public ResponseEntity<?> guardarHorarios(@RequestBody List<Horario> horarios) {
         try {
-            horarioService.guardarHorario(horario);
+            for (Horario horario : horarios) {
+                horarioService.guardarHorario(horario); // Guardar cada horario individualmente
+            }
+            return ResponseEntity.status(HttpStatus.CREATED).body("Horarios guardados exitosamente");
         } catch (Exception e) {
-            return "Error al guardar horario: " + e.getMessage();
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error al guardar los horarios: " + e.getMessage());
         }
-        return "Horario guardado con éxito";
     }
+
+
 }

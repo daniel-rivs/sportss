@@ -24,7 +24,7 @@ public class Encargado implements Serializable {
     @Column(name = "id_encargado") // Asegúrate de que la columna en la base de datos sea la correcta
     private int idEncargado; // Cambié el nombre a camelCase
 
-    @ManyToOne
+    @OneToOne
     @JsonBackReference // Evita serializar al padre en el JSON
     @JoinColumn(name = "deportivo_id", referencedColumnName = "id_Deportivo")
     private Deportivo deportivo;

@@ -20,7 +20,7 @@ public class CanchaController {
             CanchaService.crearCancha(cancha);
             return "Cancha creada con exito!";
         }catch(Exception e){
-            return "Error al crear una chanca:" + e.getMessage();
+            return "Error al crear una cancha:" + e.getMessage();
         }
     }
 

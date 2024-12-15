@@ -31,10 +31,10 @@ public class Horario implements Serializable {
     @Column(name = "dia_semana") // Relaciona esta propiedad con la columna "dia_semana".
     private String diaSemana;
 
-    @Column(name = "hora_apertura") // Relaciona esta propiedad con la columna "hora_apertura".
+    @Column(name = "hora_apertura", nullable = true) // Relaciona esta propiedad con la columna "hora_apertura".
     private LocalTime horaApertura;
 
-    @Column(name = "hora_cierre") // Relaciona esta propiedad con la columna "hora_cierre".
+    @Column(name = "hora_cierre", nullable = true) // Relaciona esta propiedad con la columna "hora_cierre".
     private LocalTime horaCierre;
 
     private boolean inhabil; // Esta columna se genera automáticamente a partir del nombre del atributo.

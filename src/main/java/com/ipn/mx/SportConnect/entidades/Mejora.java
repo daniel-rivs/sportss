@@ -1,5 +1,6 @@
 package com.ipn.mx.SportConnect.entidades;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -20,8 +21,10 @@ public class Mejora implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id_mejora;
 
-    @Column(name = "cancha_id", length = 100, nullable = false)
-    private int cancha_id;
+    @ManyToOne
+    @JoinColumn(name = "cancha_id", referencedColumnName = "id_cancha")
+    @JsonBackReference // Evita serializar al padre en el JSON
+    private Cancha cancha;
 
     @Column(name = "nombre_mejora", length = 100, nullable = false)
     private String nombre_mejora;
@@ -43,7 +46,7 @@ public class Mejora implements Serializable {
     public String toString(){
         return "Deportivo{" +
                 "id_mejora:" + id_mejora +
-                "cancha_id: " + cancha_id +
+                "cancha_id: " + cancha.getId_cancha() +
                 "nombre_mejora: " + nombre_mejora +
                 "descripcion_mejora: " + descripcion_mejora +
                 "justificacion_mejora: " + justificacion_mejora +

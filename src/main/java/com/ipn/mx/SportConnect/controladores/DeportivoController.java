@@ -3,9 +3,14 @@ package com.ipn.mx.SportConnect.controladores;
 import com.ipn.mx.SportConnect.entidades.Deportivo;
 import com.ipn.mx.SportConnect.servicios.DeportivoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/deportivos")
@@ -15,14 +20,20 @@ public class DeportivoController {
     private DeportivoService deportivoService;
 
     @PostMapping("/createDeportivo")
-    public String crearDeportivo(@RequestBody Deportivo deportivo){
-        try{
-            deportivoService.crearDeportivo(deportivo);
-            return "Deportivo creado con éxito!";
-        }catch(Exception e){
-            return "Error al crear evento: " + e.getMessage();
+    public ResponseEntity<?> crearDeportivo(@RequestBody Deportivo deportivo) {
+        try {
+            Deportivo nuevoDeportivo = deportivoService.crearDeportivo(deportivo);
+            Map<String, Object> response = new HashMap<>();
+            response.put("message", "Deportivo creado con éxito!");
+            response.put("ID_Deportivo", nuevoDeportivo.getIdDeportivo()); // Asegúrate de que `getIdDeportivo` existe en tu clase `Deportivo`
+            return ResponseEntity.status(HttpStatus.CREATED).body(response);
+        } catch (Exception e) {
+            Map<String, String> errorResponse = new HashMap<>();
+            errorResponse.put("message", "Error al crear el deportivo: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
         }
     }
+
 
     @GetMapping("/obtenerDeportivos")
     public List<Deportivo> obtenerDeportivos(){
@@ -65,4 +76,24 @@ public class DeportivoController {
             return "Error al eliminar un deportivo: " + e.getMessage();
         }
     }
+
+    @GetMapping("/getDeportivoByEncargado/{rfcCurp}")
+    public ResponseEntity<?> getDeportivosByEncargado(@PathVariable String rfcCurp) {
+        if (rfcCurp == null || rfcCurp.isEmpty()) {
+            return ResponseEntity.badRequest().body("RFC_CURP es requerido");
+        }
+
+        try {
+            List<Deportivo> deportivos = deportivoService.getDeportivosByEncargado(rfcCurp);
+
+            if (deportivos.isEmpty()) {
+                return ResponseEntity.ok(Collections.emptyList());
+            }
+
+            return ResponseEntity.ok(deportivos);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error interno del servidor" + e.getMessage());
+        }
+    }
 }
+

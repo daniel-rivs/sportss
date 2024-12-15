@@ -52,7 +52,7 @@ public class Direccion implements Serializable {
     public String toString(){
         return "Direccion{" +
                 "id_direccion:" + idDireccion +
-                "deportivo_id:" + deportivo +
+                "deportivo_id:" + deportivo.getIdDeportivo() +
                 "calle: " + calle +
                 "alcaldia: " + alcaldia +
                 "codigo_postal: " + codigoPostal +

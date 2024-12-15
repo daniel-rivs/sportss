@@ -1,6 +1,7 @@
 package com.ipn.mx.SportConnect.entidades;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -8,7 +9,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
-
+import java.util.List;
 
 
 @Data
@@ -52,6 +53,9 @@ public class Cancha implements Serializable {
     @Column(name = "coordenadas_cancha", length = 100, nullable = false)
     private String coordenadas_cancha;
 
+    @OneToMany(mappedBy = "cancha", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @JsonManagedReference
+    private List<Mejora> mejoras;
 
     @Override
     public String toString(){

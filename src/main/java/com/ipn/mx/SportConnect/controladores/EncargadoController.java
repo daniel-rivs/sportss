@@ -1,11 +1,14 @@
 package com.ipn.mx.SportConnect.controladores;
 
 import com.ipn.mx.SportConnect.entidades.Encargado;
+import com.ipn.mx.SportConnect.entidades.Horario;
+import com.ipn.mx.SportConnect.servicios.EncargadoService;
 import com.ipn.mx.SportConnect.servicios.impl.EncargadoServiceImpl;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.persistence.Id;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,6 +21,8 @@ public class EncargadoController {
 
     @Autowired
     private EncargadoServiceImpl encargadoServiceImpl;
+    @Autowired
+    private EncargadoService encargadoService;
 
     @Operation(summary = "Iniciar sesión",
             description = "Verifica las credenciales del usuario y devuelve un estado correspondiente")
@@ -66,7 +71,11 @@ public class EncargadoController {
     @Operation(summary = "Crear o actualizar un encargado",
             description = "Guarda un nuevo encargado o actualiza uno existente")
     @PostMapping("/guardarEncargado")
-    public Encargado guardarEncargado(@RequestBody Encargado encargado) {
-        return encargadoServiceImpl.guardarEncargado(encargado);
-    }
+    public ResponseEntity<?> guardarEncargado(@RequestBody Encargado encargado) {
+        try {
+                encargadoServiceImpl.guardarEncargado(encargado); // Guardar cada horario individualmente
+            return ResponseEntity.status(HttpStatus.CREATED).body("Encargado guardado exitosamente");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error al guardar encargado: " + e.getMessage());
+        }    }
 }

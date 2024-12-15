@@ -29,8 +29,8 @@ public class DeportivoServiceImpl implements DeportivoService {
 
     @Override
     @Transactional
-    public void crearDeportivo(Deportivo deportivo) {
-        deportivoRepository.save(deportivo);
+    public Deportivo crearDeportivo(Deportivo deportivo) {
+        return deportivoRepository.save(deportivo);
     }
 
     @Override
@@ -53,34 +53,8 @@ public class DeportivoServiceImpl implements DeportivoService {
         deportivoRepository.deleteById(idDeportivo);
     }
 
-    /*@Override
-    @Transactional
-    public String deleteDeportivoInfo(int ID_Deportivo) {
-        try {
-            // Elimina todos los registros asociados al ID_Deportivo
-            canchaRepository.deleteByDeportivoId(ID_Deportivo);
-            encargadoRepository.deleteByDeportivoId(ID_Deportivo);
-            horarioRepository.deleteByDeportivoId(ID_Deportivo);
-
-            // Encuentra el deportivo para obtener la dirección asociada
-            Optional<Deportivo> deportivoOptional = deportivoRepository.findById(ID_Deportivo);
-
-            if (deportivoOptional.isPresent()) {
-                Deportivo deportivo = deportivoOptional.get();
-                Long direccionId = deportivo.getDireccion().getId();
-
-                // Elimina el registro de Deportivo
-                deportivoRepository.delete(deportivo);
-
-                // Si la dirección existe, la elimina
-                if (direccionId != null) {
-                    direccionRepository.deleteById(direccionId);
-                }
-            }
-
-            return "Registros eliminados correctamente";
-        } catch (Exception e) {
-            throw new RuntimeException("Error al eliminar registros del deportivo", e);
-        }
-    }*/
+    @Override
+    public List<Deportivo> getDeportivosByEncargado(String rfcCurp) {
+        return deportivoRepository.findDeportivosByEncargado(rfcCurp);
+    }
 }

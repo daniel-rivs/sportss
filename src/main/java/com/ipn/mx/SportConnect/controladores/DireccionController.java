@@ -1,5 +1,6 @@
 package com.ipn.mx.SportConnect.controladores;
 import com.ipn.mx.SportConnect.entidades.Direccion;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import com.ipn.mx.SportConnect.servicios.DireccionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,13 +16,12 @@ public class DireccionController {
     private DireccionService direccionService;
 
     @PostMapping("/createDireccion")
-    public String crearDireccion(@RequestBody Direccion direccion){
+    public ResponseEntity<?>  crearDireccion(@RequestBody Direccion direccion){
         try{
             direccionService.crearDireccion(direccion);
-            return "Direccion añadida con éxito!";
+            return new ResponseEntity<>("Dirección creada con éxito.", HttpStatus.CREATED);
         }catch(Exception e){
-            return "Error al añadir direccion: " + e.getMessage();
-        }
+            return new ResponseEntity<>("Error al crear la dirección: " + e.getMessage(), HttpStatus.BAD_REQUEST);        }
     }
     //todas las direcciones
     @GetMapping("/obtenerDirecciones")
