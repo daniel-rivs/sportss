@@ -10,7 +10,9 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/mejoras")
 public class MejoraController {
-
+    //Solo se usa deleteMejora, el resto son obtenidas por medio de las relaciones cardinales que hace springboot, ya que al llamar a una cancha
+    //se regresa junto con su contenido.
+    //Al editar una cancha, tambien se envia la informacion de la mejora en el json, entidad que "hija" de la cancha, por eso
     @Autowired
     private MejoraService mejoraService;
 

@@ -58,15 +58,32 @@ public class DeportivoController {
     }
 
     @PutMapping("/updateDeportivo")
-    public String updateDeportivo(@RequestBody Deportivo deportivo){
-        try{
-            deportivoService.updateDeportivo(deportivo);
-            return "Deportivo actualizado con éxito!";
-        } catch(Exception e){
-            return("Error al actualizar un deportivo: " + e.getMessage());
+    public ResponseEntity<?> updateDeportivo(@RequestBody Deportivo deportivo) {
+        try {
+            Deportivo existente = deportivoService.obtenerDeportivo(deportivo.getIdDeportivo());
+            if (existente == null) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Deportivo no encontrado");
+            }
+
+            // Actualizar solo los campos básicos
+            existente.setNombre(deportivo.getNombre());
+            existente.setNumero_registro(deportivo.getNumero_registro());
+            existente.setAcepta_mascotas(deportivo.isAcepta_mascotas());
+            existente.setTiene_tienda(deportivo.isTiene_tienda());
+            existente.setTiene_vestidores(deportivo.isTiene_vestidores());
+            existente.setTiene_regaderas(deportivo.isTiene_regaderas());
+            existente.setTiene_medico(deportivo.isTiene_medico());
+
+            deportivoService.updateDeportivo(existente);
+
+            return ResponseEntity.ok("Información básica del deportivo actualizada con éxito!");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Error al actualizar el deportivo: " + e.getMessage());
         }
     }
 
+    //Ya elimina el deportivo y todo lo relacionado al mismo gracias a las relaciones cardinales
     @DeleteMapping("/deleteDeportivo")
     public String deleteDeportivo(@RequestParam int idDeportivo){
         try{

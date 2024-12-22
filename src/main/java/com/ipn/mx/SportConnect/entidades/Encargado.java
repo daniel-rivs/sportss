@@ -26,9 +26,8 @@ public class Encargado implements Serializable {
 
     @OneToOne
     @JsonBackReference // Evita serializar al padre en el JSON
-    @JoinColumn(name = "deportivo_id", referencedColumnName = "id_Deportivo")
-    private Deportivo deportivo;
-
+    @JoinColumn(name = "deportivo_id", referencedColumnName = "id_Deportivo") //en la tabla encargado, se tiene la fk deportivo_id
+    private Deportivo deportivo;                                               //sin embargo, el id al que se hace referencia es id_deportivo
 
     @Column(name = "nombre_encargado")
     private String nombre;

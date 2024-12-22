@@ -53,14 +53,34 @@ public class DireccionController {
     }
 
     @PutMapping("/updateDireccion")
-    public String updateDireccion(@RequestBody Direccion direccion){
-        try{
-            direccionService.updateDireccion(direccion);
-        } catch(Exception e){
+    public ResponseEntity<String> updateDireccion(@RequestBody Direccion direccion) {
+        try {
+            // Buscar la dirección existente por ID
+            Direccion direccionExistente = direccionService.obtenerDireccion(direccion.getIdDireccion());
+            if (direccionExistente == null) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("La dirección no existe.");
+            }
+
+            // Actualizar los campos de la dirección existente con los nuevos valores
+            direccionExistente.setCalle(direccion.getCalle());
+            direccionExistente.setAlcaldia(direccion.getAlcaldia());
+            direccionExistente.setCodigoPostal(direccion.getCodigoPostal());
+            direccionExistente.setCoords(direccion.getCoords());
+            direccionExistente.setReferencias(direccion.getReferencias());
+            direccionExistente.setEntre_calle1(direccion.getEntre_calle1());
+            direccionExistente.setEntre_calle2(direccion.getEntre_calle2());
+
+            // Guardar la dirección actualizada
+            direccionService.updateDireccion(direccionExistente);
+
+            return ResponseEntity.ok("La dirección fue actualizada con éxito.");
+        } catch (Exception e) {
             System.out.println("Error al actualizar la dirección: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Ocurrió un error al actualizar la dirección.");
         }
-        return null;
     }
+
 
     @DeleteMapping("/deleteDireccion")
     public String deleteDireccion(@RequestParam int idDireccion){

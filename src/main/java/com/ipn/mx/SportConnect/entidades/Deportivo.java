@@ -48,11 +48,11 @@ public class Deportivo implements Serializable {
     @JsonManagedReference
     private List<Cancha> canchas;
 
-    @OneToOne(mappedBy = "deportivo", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY) //Aqui es uno a uno, y debe coincidir en ambas entidades
+    @OneToOne(mappedBy = "deportivo", cascade = CascadeType.ALL, orphanRemoval = true) //Aqui es uno a uno, y debe coincidir en ambas entidades
     @JsonManagedReference
     private Direccion direccion; //Ya no se hace un contenedor (lista) porque solo es uno a uno, por ende, solo se requiere de una direccion.
-
-    @OneToOne(mappedBy = "deportivo", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    //Y si es onetoOne, ya no hace falta poner Eager o Lazy, no afecta en nada.
+    @OneToOne(mappedBy = "deportivo", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
     private Encargado encargado;
 
