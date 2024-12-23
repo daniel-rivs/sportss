@@ -77,5 +77,35 @@ public class EncargadoController {
             return ResponseEntity.status(HttpStatus.CREATED).body("Encargado guardado exitosamente");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error al guardar encargado: " + e.getMessage());
-        }    }
+        }
+    }
+
+    @PutMapping("/updateEncargado")
+    public ResponseEntity<?> updateEncargado(@RequestBody Encargado encargado) {
+        try {
+            // Verificar si el encargado ya existe
+            Encargado encargadoExistente = encargadoServiceImpl.obtenerEncargadoPorId(encargado.getIdEncargado());
+            if (encargadoExistente == null) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Encargado no encontrado");
+            }
+
+            // Actualizar solo los campos del encargado, sin modificar el deportivo
+            encargadoExistente.setNombre(encargado.getNombre());
+            encargadoExistente.setPrimerApellido(encargado.getPrimerApellido());
+            encargadoExistente.setSegundoApellido(encargado.getSegundoApellido());
+            encargadoExistente.setTelefonoFijo(encargado.getTelefonoFijo());
+            encargadoExistente.setTelefonoMovil(encargado.getTelefonoMovil());
+            encargadoExistente.setCargo(encargado.getCargo());
+            encargadoExistente.setRfcCurp(encargado.getRfcCurp());
+            encargadoExistente.setContrasena(encargado.getContrasena());
+
+            // Guardar los cambios
+            encargadoServiceImpl.guardarEncargado(encargadoExistente);
+
+            return ResponseEntity.status(HttpStatus.OK).body("Encargado actualizado exitosamente");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error al actualizar encargado: " + e.getMessage());
+        }
+    }
+
 }

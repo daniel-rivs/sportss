@@ -30,4 +30,9 @@ public class EncargadoServiceImpl implements EncargadoService {
     public Optional<Encargado> buscarPorRFC(String RFC_CURP) {
         return encargadoRepository.findByRfcCurp(RFC_CURP);
     }
+
+    @Override
+    public void updateEncargado(Encargado encargado) {
+        encargadoRepository.save(encargado);
+    }
 }

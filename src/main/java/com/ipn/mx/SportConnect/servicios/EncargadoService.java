@@ -1,5 +1,6 @@
 package com.ipn.mx.SportConnect.servicios;
 
+import com.ipn.mx.SportConnect.entidades.Direccion;
 import com.ipn.mx.SportConnect.entidades.Encargado;
 
 import java.util.List;
@@ -15,4 +16,7 @@ public interface EncargadoService {
 
     // Método para buscar un encargado por RFC
     public Optional<Encargado> buscarPorRFC(String RFC_CURP);
+
+    // Método para actualizar un encargado
+    void updateEncargado(Encargado encargado);
 }
